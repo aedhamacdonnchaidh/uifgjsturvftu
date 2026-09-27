@@ -5,8 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uif Rvftu Bifbe</title>
     <style>
+        /* --- Global Color Inversion Rule & Custom Cursor --- */
+        html {
+            filter: invert(1); 
+            background-color: #ffffff; 
+            
+            /* Targets your custom transparent image file (Recommended size: 32x32px) */
+            cursor: url('cursor2.png'), auto;
+        }
+
         body {
             text-align: center;
+            margin: 0; 
+            padding: 0;
+            font-family: sans-serif;
         }
         
         .image-container {
@@ -21,28 +33,243 @@
             height: auto;
         }
 
+        /* --- Full-Page Background Overlay Layer --- */
+        .full-page-overlay {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100vw;    
+            height: 100vh;   
+            object-fit: cover; 
+            z-index: 9997;   
+            pointer-events: none; 
+            animation: flicker 5s infinite;
+        }
+
+        /* --- Full-Page Blended Overlay Assets (Layer 9998) --- */
+        .secondary-overlay, .third-overlay, .fourth-overlay, .fifth-overlay {
+            position: fixed;       
+            z-index: 9998;         
+            pointer-events: none;  
+            top: 0px;
+            left: 0px;             
+            width: 100vw;          
+            height: 100vh;         
+            object-fit: cover;     
+        }
+
+        .secondary-overlay { opacity: 0.4; }
+        .third-overlay     { opacity: 0.3; }
+        .fourth-overlay    { opacity: 0.5; }
+        .fifth-overlay     { opacity: 0.4; } /* Blending visibility parameter for corrupt5 */
+
+        /* --- Hidden Navigation Link Box Interactivity Layer --- */
         .invisible-hotspot {
+            display: none; 
             position: absolute;
-            /* Temporarily made this slightly red so you can see where it sits! Change back to "transparent" later */
             background: transparent; 
-            cursor: pointer;
+            cursor: pointer; 
             top: 58%;
             left: 23%;
-            width: 30%;   /* Added missing semicolons */
-            height: 30%;  /* Added missing semicolons */
+            width: 30%;   
+            height: 30%;  
+            z-index: 9999; 
         }
-    </style> <!-- Added missing closing style tag -->
-</head> <!-- Added missing closing head tag -->
+
+        /* --- Highly Visible Audio Button Interface Styling --- */
+        .audio-controls-container {
+            margin: 30px auto;
+            position: relative;
+            z-index: 10000; 
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap; 
+        }
+
+        .custom-play-btn {
+            background-color: #000000; 
+            color: #ffffff;            
+            border: 3px solid #ffffff; 
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: inherit; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
+            transition: all 0.2s ease-in-out;
+            width: 190px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .custom-play-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: scale(1.05); 
+        }
+
+        /* --- QUIZ CONTAINER STYLING --- */
+        .quiz-container {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            border: 3px double #000000;
+            background: #ffffff;
+            position: relative;
+            z-index: 10001;
+        }
+
+        .quiz-gate {
+            display: none; 
+        }
+
+        .quiz-instruction {
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-choice-btn {
+            background-color: #000000; 
+            color: #ffffff;            
+            border: 3px solid #ffffff; 
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: inherit; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin: 5px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .quiz-choice-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: scale(1.05);
+        }
+
+        /* --- Screen Shake Animation --- */
+        .shake-animation {
+            animation: shakeEffect 0.4s ease-in-out;
+        }
+
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            15%, 45%, 75% { transform: translateX(-15px); }
+            30%, 60%, 90% { transform: translateX(15px); }
+        }
+    </style> 
+</head> 
 <body>
 
-    <h1>Uif Rvftu Bifbe</h1>
-    <p>gjof uif dpef.</p>
+    <!-- Full-Screen Base Overlays -->
+    <img src="corrupt2.png" alt="Be ready traveler" class="secondary-overlay">
+    <img src="corrupt3.png" alt="The cycle continues" class="third-overlay">
+    <img src="corrupt4.png" alt="The pattern closes" class="fourth-overlay">
+    <!-- FIXED: Added missing corrupt5 image node back into layout structure flow -->
+    <img src="corrupt5.png" alt="The glitch deepens" class="fifth-overlay">
+
+    <h1>IF JT DPNJOH.</h1>
+    <p>IF JT DPNJOH.</p>
+
+    <!-- UNIFIED QUIZ SYSTEM -->
+    <div class="quiz-container">
+        <div class="quiz-gate" id="stage1" style="display: block;">
+            <div class="quiz-instruction">WHAT DO YOU SEEK?</div>
+            <button class="quiz-choice-btn" onclick="triggerIncorrectChoice()">THE TRUTH.</button>
+            <button class="quiz-choice-btn" onclick="triggerIncorrectChoice()">THE DANCER.</button>
+            <button class="quiz-choice-btn" onclick="advanceStage(1, 2)">AEDHA.</button>
+        </div>
+
+        <div class="quiz-gate" id="stage2">
+            <div class="quiz-instruction">WHO IS AEDHA TO YOU?</div>
+            <button class="quiz-choice-btn" onclick="advanceStage(2, 'complete')">A COMPANION.</button>
+            <button class="quiz-choice-btn" onclick="triggerIncorrectChoice()">A MESSENGER.</button>
+        </div>
+
+        <div class="quiz-gate" id="stage-complete">
+            <div class="quiz-instruction">ACCESS GRANTED. SEND ME A MESSAGE. effsxbmlfseffsxbmlfs@gmail.com</div>
+        </div>
+    </div>
     
     <div class="image-container">
-        <img src="websiteimage.jpg" alt="A description of my picture">
-        <!-- Changed class name to match your CSS definition (.invisible-hotspot) -->
-        <a href="https://instagram.com/deer.20262711" class="invisible-hotspot" title="Uif Effs Xbudift."></a>
-    </div> <!-- Added missing closing div tag -->
+        <img src="websiteimage.jpg" alt="Aedha Mac Donnchaidh">
+        <a href="https://google.com" target="_blank" id="mailLink" class="invisible-hotspot" title="Uif Effs Xbudift."></a>
+    </div> 
+
+    <!-- Silent Underlying Core Audio Assets -->
+    <audio id="audioTrack1" src="birdsanddeer.mp3"></audio>
+    <audio id="audioTrack2" src="hardcorelol.mp3"></audio>
+    <audio id="audioTrack3" src="seenoevillol.mp3"></audio>
+
+    <!-- Fixed-Size Visual Buttons for Viewers -->
+    <div class="audio-controls-container">
+        <button class="custom-play-btn" onclick="toggleAudio('audioTrack1', this)">
+            <span class="icon">▶</span> <span class="label">Sound 1</span>
+        </button>
+        <button class="custom-play-btn" onclick="toggleAudio('audioTrack2', this)">
+            <span class="icon">▶</span> <span class="label">Sound 2</span>
+        </button>
+        <button class="custom-play-btn" onclick="toggleAudio('audioTrack3', this)">
+            <span class="icon">▶</span> <span class="label">Sound 3</span>
+        </button>
+    </div>
+
+    <!-- FIXED LAYER PRIORITY: Shifted z-index up to 9999999 to guarantee deerwalker2 breaks through background assets -->
+    <div style="position: fixed !important; z-index: 9999999 !important; pointer-events: none !important; bottom: 50px !important; right: 70px !important;">
+        <img src="deerwalker2.png" alt="HE WATCHES" style="width: 700px !important; height: auto !important; filter: invert(1) !important;">
+    </div>
+
+    <!-- ENGINE SCRIPTS -->
+    <script>
+        function advanceStage(currentStageNum, nextStageNum) {
+            document.getElementById('stage' + currentStageNum).style.display = 'none';
+            if (nextStageNum === 'complete') {
+                document.getElementById('stage-complete').style.display = 'block';
+                document.getElementById('mailLink').style.display = 'block';
+            } else {
+                document.getElementById('stage' + nextStageNum).style.display = 'block';
+            }
+        }
+
+        function triggerIncorrectChoice() {
+            const bodyElement = document.body;
+            bodyElement.classList.add('shake-animation');
+            setTimeout(() => {
+                bodyElement.classList.remove('shake-animation');
+            }, 400);
+        }
+
+        function toggleAudio(audioId, btnElement) {
+            const currentAudio = document.getElementById(audioId);
+            const currentIcon = btnElement.querySelector('.icon');
+            
+            document.querySelectorAll('audio').forEach(track => {
+                if (track !== currentAudio) {
+                    track.pause();
+                    const siblingBtn = document.querySelector('[onclick*="' + track.id + '"]');
+                    if(siblingBtn) {
+                        siblingBtn.querySelector('.icon').innerText = "▶";
+                    }
+                }
+            });
+
+            if (currentAudio.paused) {
+                currentAudio.play();
+                currentIcon.innerText = "⏸";
+            } else {
+                currentAudio.pause();
+                currentIcon.innerText = "▶";
+            }
+        }
+    </script>
 
 </body>
 </html>
